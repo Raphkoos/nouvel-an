@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon super site</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonne Année</title>
 </head>
 <body>
-    <header>
-        <h1>Bienvenue sur mon site !</h1>
-    </header>
-    <main>
-        <p>Mon site est en ligne grâce à GitHub Pages 😎</p>
-        <button onclick="hello()">Clique-moi</button>
-    </main>
-    <script src="script.js"></script>
+<h1 id="message">Raphaël vous souhaite une belle année !</h1>
+
+<label for="name">Votre nom :</label>
+<input type="text" id="name" placeholder="Entrez votre nom">
+<button onclick="generateMessage()">Générer</button>
+
 </body>
 </html>
-

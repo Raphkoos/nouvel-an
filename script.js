@@ -1,3 +1,4 @@
+// Canvas et confettis
 const canvas = document.getElementById('confetti');
 const ctx = canvas.getContext('2d');
 
@@ -8,6 +9,7 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
+// Création des confettis
 let confettis = [];
 for(let i=0;i<150;i++){
     confettis.push({
@@ -43,13 +45,12 @@ function updateConfetti(){
     }
 }
 
-// --- Boucle continue ---
 function animateConfetti() {
     drawConfetti();
     updateConfetti();
-    requestAnimationFrame(animateConfetti); // relance automatiquement
+    requestAnimationFrame(animateConfetti);
 }
-animateConfetti(); // lance tout de suite
+animateConfetti(); // confettis permanents
 
 // --- Fonction générer nom et URL ---
 function generateMessage() {

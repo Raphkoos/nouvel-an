@@ -62,7 +62,7 @@ function generateMessage() {
     // mettre à jour l'URL
     const url = new URL(window.location);
     url.searchParams.set("name", name);
-    window.history.replaceState(null, '', url);
+    window.open(url.href, '_blank');
 
     input.value = "";  // vider le champ après avoir utilisé la valeur
 }

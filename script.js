@@ -5,10 +5,19 @@ function generateMessage() {
     // URL partageable
     let url = new URL(window.location);
     url.searchParams.set("name", name);
-    window.history.replaceState(null, '', url); // change l'URL sans recharger
+    window.history.replaceState(null, '', url);
+
+    launchConfetti();
 }
 
-// Optionnel : récupérer le nom depuis l'URL si quelqu'un partage un lien
+// Copier le lien
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        alert("Lien copié !");
+    });
+}
+
+// Récupérer le nom depuis l'URL si lien partagé
 window.onload = function() {
     let params = new URLSearchParams(window.location.search);
     let name = params.get("name");
@@ -17,3 +26,52 @@ window.onload = function() {
         document.getElementById("name").value = name;
     }
 };
+
+// --- Confettis simples ---
+const canvas = document.getElementById('confetti');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const ctx = canvas.getContext('2d');
+
+let confettis = [];
+for(let i=0;i<150;i++){
+    confettis.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*6+4,
+        d: Math.random()*100+50,
+        color: `hsl(${Math.random()*360}, 100%, 50%)`,
+        tilt: Math.random()*10-10
+    });
+}
+
+function drawConfetti(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let c of confettis){
+        ctx.beginPath();
+        ctx.moveTo(c.x+c.tilt+ c.r/2, c.y);
+        ctx.lineTo(c.x+c.tilt, c.y+c.r);
+        ctx.strokeStyle = c.color;
+        ctx.lineWidth = c.r/2;
+        ctx.stroke();
+    }
+}
+
+function updateConfetti(){
+    for(let c of confettis){
+        c.y += 2;
+        c.tilt += 0.5;
+        if(c.y > canvas.height){
+            c.y = -10;
+            c.x = Math.random()*canvas.width;
+        }
+    }
+}
+
+function launchConfetti(){
+    let interval = setInterval(()=>{
+        drawConfetti();
+        updateConfetti();
+    }, 20);
+    setTimeout(()=>clearInterval(interval), 4000); // confettis pendant 4s
+}

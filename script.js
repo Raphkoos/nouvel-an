@@ -55,16 +55,16 @@ animateConfetti(); // commence dès le chargement
 
 // --- Fonction générer nom et URL ---
 function generateMessage() {
-    let name = document.getElementById("name").value || "Raphaël";
+    const input = document.getElementById("name");
+    const name = input.value || "Raphaël";   // lire la valeur avant de vider le champ
     document.getElementById("message").textContent = name + " vous souhaite une belle année !";
 
-    // mettre à jour l'URL avec le nom
-    let url = new URL(window.location);
+    // mettre à jour l'URL
+    const url = new URL(window.location);
     url.searchParams.set("name", name);
     window.history.replaceState(null, '', url);
 
-    // vider le champ d'entrée après génération
-    document.getElementById("name").value = "";
+    input.value = "";  // vider le champ après avoir utilisé la valeur
 }
 
 // --- Copier le lien ---
@@ -74,10 +74,10 @@ function copyLink() {
     });
 }
 
-// --- Récupérer nom depuis URL au chargement (champ vide) ---
+// --- Récupérer nom depuis URL au chargement (champ vide)
 window.onload = function() {
-    let params = new URLSearchParams(window.location.search);
-    let name = params.get("name");
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name");
     if(name) {
         document.getElementById("message").textContent = name + " vous souhaite une belle année !";
         document.getElementById("name").value = ""; // champ vide même si nom présent dans l'URL

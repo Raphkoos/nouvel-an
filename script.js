@@ -70,11 +70,26 @@ function generateMessage() {
 }
 
 // --- Copier le lien ---
-function copyLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        alert("Lien copié !");
-    });
+function shareLink() {
+    const url = window.location.href;
+
+    if (navigator.share) {
+        // API Web Share disponible
+        navigator.share({
+            title: 'Bonne année !',
+            text: 'Je vous souhaite une belle année !',
+            url: url
+        })
+        .then(() => console.log('Partage réussi'))
+        .catch((error) => console.log('Erreur partage', error));
+    } else {
+        // Si l'API n'est pas disponible (ex : certains PC)
+        navigator.clipboard.writeText(url).then(() => {
+            alert("Lien copié !"); // fallback : copie le lien
+        });
+    }
 }
+
 
 // --- Récupérer nom depuis URL au chargement (champ vide)
 window.onload = function() {

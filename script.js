@@ -53,18 +53,20 @@ function animateConfetti() {
 }
 animateConfetti(); // commence dès le chargement
 
-// --- Fonction générer nom et URL ---
+// --- Fonction générer nom et ouvrir dans une nouvelle fenêtre ---
 function generateMessage() {
     const input = document.getElementById("name");
-    const name = input.value || "Raphaël";   // lire la valeur avant de vider le champ
-    document.getElementById("message").textContent = name + " vous souhaite une belle année !";
+    const name = input.value || "Raphaël";
 
-    // mettre à jour l'URL
+    // créer l'URL avec le nom
     const url = new URL(window.location);
     url.searchParams.set("name", name);
+
+    // ouvrir dans un nouvel onglet / nouvelle fenêtre
     window.open(url.href, '_blank');
 
-    input.value = "";  // vider le champ après avoir utilisé la valeur
+    // vider le champ après génération
+    input.value = "";
 }
 
 // --- Copier le lien ---

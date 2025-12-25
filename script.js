@@ -2,6 +2,7 @@
 const canvas = document.getElementById('confetti');
 const ctx = canvas.getContext('2d');
 
+// Adapter le canvas à la fenêtre
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -36,7 +37,7 @@ function drawConfetti(){
 // Mettre à jour la position
 function updateConfetti(){
     for(let c of confettis){
-        c.y += 2; // descend verticalement
+        c.y += 2; // tombe verticalement
         if(c.y > canvas.height){
             c.y = -10;
             c.x = Math.random()*canvas.width;
@@ -50,4 +51,35 @@ function animateConfetti() {
     updateConfetti();
     requestAnimationFrame(animateConfetti);
 }
-animateConfetti();
+animateConfetti(); // commence dès le chargement
+
+// --- Fonction générer nom et URL ---
+function generateMessage() {
+    let name = document.getElementById("name").value || "Raphaël";
+    document.getElementById("message").textContent = name + " vous souhaite une belle année !";
+
+    // mettre à jour l'URL avec le nom
+    let url = new URL(window.location);
+    url.searchParams.set("name", name);
+    window.history.replaceState(null, '', url);
+
+    // vider le champ d'entrée après génération
+    document.getElementById("name").value = "";
+}
+
+// --- Copier le lien ---
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        alert("Lien copié !");
+    });
+}
+
+// --- Récupérer nom depuis URL au chargement (champ vide) ---
+window.onload = function() {
+    let params = new URLSearchParams(window.location.search);
+    let name = params.get("name");
+    if(name) {
+        document.getElementById("message").textContent = name + " vous souhaite une belle année !";
+        document.getElementById("name").value = ""; // champ vide même si nom présent dans l'URL
+    }
+};

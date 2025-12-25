@@ -9,7 +9,6 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-// Création des confettis
 let confettis = [];
 for(let i=0;i<150;i++){
     confettis.push({

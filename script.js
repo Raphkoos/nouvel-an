@@ -1,37 +1,12 @@
-function generateMessage() {
-    let name = document.getElementById("name").value || "Raphaël";
-    document.getElementById("message").textContent = name + " vous souhaite une belle année !";
-
-    // URL partageable
-    let url = new URL(window.location);
-    url.searchParams.set("name", name);
-    window.history.replaceState(null, '', url);
-
-    launchConfetti();
-}
-
-// Copier le lien
-function copyLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        alert("Lien copié !");
-    });
-}
-
-// Récupérer le nom depuis l'URL si lien partagé
-window.onload = function() {
-    let params = new URLSearchParams(window.location.search);
-    let name = params.get("name");
-    if(name) {
-        document.getElementById("message").textContent = name + " vous souhaite une belle année !";
-        document.getElementById("name").value = name;
-    }
-};
-
-// --- Confettis simples ---
 const canvas = document.getElementById('confetti');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
 let confettis = [];
 for(let i=0;i<150;i++){
@@ -68,10 +43,37 @@ function updateConfetti(){
     }
 }
 
-function launchConfetti(){
-    let interval = setInterval(()=>{
-        drawConfetti();
-        updateConfetti();
-    }, 20);
-    setTimeout(()=>clearInterval(interval), 4000); // confettis pendant 4s
+// --- Boucle continue ---
+function animateConfetti() {
+    drawConfetti();
+    updateConfetti();
+    requestAnimationFrame(animateConfetti); // relance automatiquement
 }
+animateConfetti(); // lance tout de suite
+
+// --- Fonction générer nom et URL ---
+function generateMessage() {
+    let name = document.getElementById("name").value || "Raphaël";
+    document.getElementById("message").textContent = name + " vous souhaite une belle année !";
+
+    let url = new URL(window.location);
+    url.searchParams.set("name", name);
+    window.history.replaceState(null, '', url);
+}
+
+// --- Copier le lien ---
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        alert("Lien copié !");
+    });
+}
+
+// --- Récupérer nom depuis URL ---
+window.onload = function() {
+    let params = new URLSearchParams(window.location.search);
+    let name = params.get("name");
+    if(name) {
+        document.getElementById("message").textContent = name + " vous souhaite une belle année !";
+        document.getElementById("name").value = name;
+    }
+};

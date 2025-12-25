@@ -53,28 +53,23 @@ function animateConfetti() {
 }
 animateConfetti(); // commence dès le chargement
 
-// --- Fonction générer nom et ouvrir dans une nouvelle fenêtre ---
+// --- Générer message et ouvrir dans une nouvelle fenêtre ---
 function generateMessage() {
     const input = document.getElementById("name");
     const name = input.value || "Raphaël";
 
-    // créer l'URL avec le nom
     const url = new URL(window.location);
     url.searchParams.set("name", name);
 
-    // ouvrir dans un nouvel onglet / nouvelle fenêtre
-    window.open(url.href, '_blank');
-
-    // vider le champ après génération
-    input.value = "";
+    window.open(url.href, '_blank'); // ouvre dans un nouvel onglet
+    input.value = ""; // vide le champ
 }
 
-// --- Copier le lien ---
+// --- Partager via Web Share API ---
 function shareLink() {
     const url = window.location.href;
 
     if (navigator.share) {
-        // API Web Share disponible
         navigator.share({
             title: 'Bonne année !',
             text: 'Je vous souhaite une belle année !',
@@ -83,13 +78,17 @@ function shareLink() {
         .then(() => console.log('Partage réussi'))
         .catch((error) => console.log('Erreur partage', error));
     } else {
-        // Si l'API n'est pas disponible (ex : certains PC)
-        navigator.clipboard.writeText(url).then(() => {
-            alert("Lien copié !"); // fallback : copie le lien
-        });
+        alert("Partage non disponible sur ce navigateur. Utilisez le bouton Copier le lien.");
     }
 }
 
+// --- Copier le lien ---
+function copyLink() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+        alert("Lien copié !");
+    });
+}
 
 // --- Récupérer nom depuis URL au chargement (champ vide)
 window.onload = function() {

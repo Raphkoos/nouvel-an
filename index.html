@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="script.js" defer></script>
 <title>Bonne Année</title>
+<link rel="stylesheet" href="style.css">
 </head>
-  
 <body>
-<h1 id="message">Raphaël vous souhaite une belle année !</h1>
-<label for="name">Votre nom :</label>
-<input type="text" id="name" placeholder="Entrez votre nom">
-<button onclick="generateMessage()">Générer</button>
+<div class="container">
+    <h1 id="message">Raphaël vous souhaite une belle année !</h1>
+    <input type="text" id="name" placeholder="Entrez votre nom">
+    <button onclick="generateMessage()">Générer</button>
+    <button onclick="copyLink()">Copier le lien</button>
+</div>
 
+<canvas id="confetti"></canvas>
+<script src="script.js"></script>
 </body>
 </html>

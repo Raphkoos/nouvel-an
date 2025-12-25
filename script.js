@@ -82,13 +82,6 @@ function shareLink() {
     }
 }
 
-// --- Copier le lien ---
-function copyLink() {
-    const url = window.location.href;
-    navigator.clipboard.writeText(url).then(() => {
-        alert("Lien copié !");
-    });
-}
 
 // --- Récupérer nom depuis URL au chargement (champ vide)
 window.onload = function() {

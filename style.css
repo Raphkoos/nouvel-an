@@ -1,16 +1,22 @@
-body {
+/* Fond + centrer le container */
+body, html {
     margin: 0;
-    height: 100vh;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     font-family: 'Arial', sans-serif;
     overflow: hidden;
-    background: linear-gradient(to right, #ff9a9e, #fad0c4);
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
 }
 
 .container {
-    position: absolute;
+    position: absolute; /* reste centré même si on redimensionne */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
     background: rgba(255,255,255,0.8);
     padding: 30px;
